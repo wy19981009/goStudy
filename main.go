@@ -7,9 +7,15 @@ func main() {
 	// println: 回车换行
 	// print 是否换行
 	fmt.Println("Hello World")
-	changeValue()
-	scanValue()
-	convert()
-	anotherName()
-	operator()
+	//changeValue()
+	//scanValue()
+	//convert()
+	//anotherName()
+	//operator()
+	//useOfIf()
+	//useOfSwitch()
+	//switchInitialize()
+	//forLoop()
+	//forCase()
+	gotoUse()
 }
