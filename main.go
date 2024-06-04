@@ -17,5 +17,6 @@ func main() {
 	//switchInitialize()
 	//forLoop()
 	//forCase()
-	gotoUse()
+	//gotoUse()
+	practice()
 }
