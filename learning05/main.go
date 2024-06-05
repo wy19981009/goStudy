@@ -42,5 +42,7 @@ func main() {
 	//for index, value := range array {
 	//	fmt.Printf("索引:%d,值：%d \n", index, value)
 	//}
-	sliceStudy()
+	//sliceStudy()
+	//mapStudy()
+	nilStudy()
 }
