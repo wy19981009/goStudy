@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"log"
@@ -168,7 +169,85 @@ func main() {
 	//}
 	//log.SetOutput(f)
 	//log.Print("this is a file log...")
-	logger.Println("自定义logger")
+	//logger.Println("自定义logger")
+
+	//var b = []byte("seafood") //强制类型转换
+	//
+	//a := bytes.ToUpper(b)
+	//fmt.Println(a, b)
+	//
+	//c := b[0:4]
+	//c[0] = 'A'
+	//fmt.Println(c, b)
+
+	//s1 := "Φφϕ kKK"
+	//s2 := "ϕΦφ KkK"
+	//
+	//// 看看 s1 里面是什么
+	//for _, c := range s1 {
+	//	fmt.Printf("%-5x", c)
+	//}
+	//fmt.Println()
+	//// 看看 s2 里面是什么
+	//for _, c := range s2 {
+	//	fmt.Printf("%-5x", c)
+	//}
+	//fmt.Println()
+	//// 看看 s1 和 s2 是否相似
+	//fmt.Println(bytes.EqualFold([]byte(s1), []byte(s2)))
+	//bs := [][]byte{ //[][]byte 字节切片 二维数组
+	//	[]byte("Hello World !"),
+	//	[]byte("Hello 世界！"),
+	//	[]byte("hello golang ."),
+	//}
+	//
+	//f := func(r rune) bool {
+	//	return bytes.ContainsRune([]byte("!！. "), r) //判断r字符是否包含在"!！. "内
+	//}
+	//
+	//for _, b := range bs { //range bs  取得下标和[]byte
+	//	fmt.Printf("去掉两边: %q\n", bytes.TrimFunc(b, f)) //去掉两边满足函数的字符
+	//}
+	//
+	//for _, b := range bs {
+	//	fmt.Printf("去掉前缀: %q\n", bytes.TrimPrefix(b, []byte("Hello "))) //去掉前缀
+	//}
+
+	//b := []byte("  Hello   World !  ")
+	//fmt.Printf("b: %q\n", b)
+	//fmt.Printf("%q\n", bytes.Split(b, []byte{' '}))
+	//
+	//fmt.Printf("%q\n", bytes.Fields(b))
+	//
+	//f := func(r rune) bool {
+	//	return bytes.ContainsRune([]byte(" !"), r)
+	//}
+	//fmt.Printf("%q\n", bytes.FieldsFunc(b, f))
+	//b := []byte("hello golang") //字符串强转为byte切片
+	//sublice1 := []byte("hello")
+	//sublice2 := []byte("Hello")
+	//fmt.Println(bytes.Contains(b, sublice1)) //true
+	//fmt.Println(bytes.Contains(b, sublice2)) //false
+	//
+	//s := []byte("hellooooooooo")
+	//sep1 := []byte("h")
+	//sep2 := []byte("l")
+	//sep3 := []byte("o")
+	//fmt.Println(bytes.Count(s, sep1)) //1
+	//fmt.Println(bytes.Count(s, sep2)) //2
+	//fmt.Println(bytes.Count(s, sep3)) //9
+	s := []byte("hello,world")
+	old := []byte("o")
+	news := []byte("ee")
+	fmt.Println(string(bytes.Replace(s, old, news, 0)))  //hello,world
+	fmt.Println(string(bytes.Replace(s, old, news, 1)))  //hellee,world
+	fmt.Println(string(bytes.Replace(s, old, news, 2)))  //hellee,weerld
+	fmt.Println(string(bytes.Replace(s, old, news, -1))) //hellee,weerld
+
+	s1 := []byte("你好世界")
+	r := bytes.Runes(s1)
+	fmt.Println("转换前字符串的长度：", len(s1)) //12
+	fmt.Println("转换后字符串的长度：", len(r))  //4
 }
 
 type MyHandler struct {
