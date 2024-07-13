@@ -3,10 +3,9 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
-	"sync"
-	"time"
 )
 
 func fileStat() {
@@ -70,6 +69,16 @@ func fileReadDir() {
 	}
 }
 
+var logger *log.Logger
+
+func init() {
+	logFile, err := os.OpenFile("test.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		log.Panic("打开日志文件异常")
+	}
+	logger = log.New(logFile, "[Mylog]", log.Ldate|log.Ltime|log.Lshortfile)
+}
+
 func main() {
 	//http.ListenAndServe(":8088", &MyHandler{})
 	//空格 换行输入都可以
@@ -100,36 +109,66 @@ func main() {
 	//fileRead()
 	//fileReadAt()
 	//fileReadDir()
-	var wg sync.WaitGroup
-	wg.Add(2)
-	//NewTimer 创建一个 Timer，它会在最少过去时间段 d 后到期，向其自身的 C 字段发送当时的时间
-	timer1 := time.NewTimer(2 * time.Second)
-
-	//NewTicker 返回一个新的 Ticker，该 Ticker 包含一个通道字段，并会每隔时间段 d 就向该通道发送当时的时间。它会调
-	//整时间间隔或者丢弃 tick 信息以适应反应慢的接收者。如果d <= 0会触发panic。关闭该 Ticker 可
-	//以释放相关资源。
-	ticker1 := time.NewTicker(2 * time.Second)
-
-	go func(t *time.Ticker) {
-		defer wg.Done()
-		for {
-			<-t.C
-			fmt.Println("get ticker1", time.Now().Format("2006-01-02 15:04:05"))
-		}
-	}(ticker1)
-
-	go func(t *time.Timer) {
-		defer wg.Done()
-		for {
-			<-t.C
-			fmt.Println("get timer", time.Now().Format("2006-01-02 15:04:05"))
-			//Reset 使 t 重新开始计时，（本方法返回后再）等待时间段 d 过去后到期。如果调用时t
-			//还在等待中会返回真；如果 t已经到期或者被停止了会返回假。
-			t.Reset(2 * time.Second)
-		}
-	}(timer1)
-
-	wg.Wait()
+	//var wg sync.WaitGroup
+	//wg.Add(2)
+	////NewTimer 创建一个 Timer，它会在最少过去时间段 d 后到期，向其自身的 C 字段发送当时的时间
+	//timer1 := time.NewTimer(2 * time.Second)
+	//
+	////NewTicker 返回一个新的 Ticker，该 Ticker 包含一个通道字段，并会每隔时间段 d 就向该通道发送当时的时间。它会调
+	////整时间间隔或者丢弃 tick 信息以适应反应慢的接收者。如果d <= 0会触发panic。关闭该 Ticker 可
+	////以释放相关资源。
+	//ticker1 := time.NewTicker(2 * time.Second)
+	//
+	//go func(t *time.Ticker) {
+	//	defer wg.Done()
+	//	for {
+	//		<-t.C
+	//		fmt.Println("get ticker1", time.Now().Format("2006-01-02 15:04:05"))
+	//	}
+	//}(ticker1)
+	//
+	//go func(t *time.Timer) {
+	//	defer wg.Done()
+	//	for {
+	//		<-t.C
+	//		fmt.Println("get timer", time.Now().Format("2006-01-02 15:04:05"))
+	//		//Reset 使 t 重新开始计时，（本方法返回后再）等待时间段 d 过去后到期。如果调用时t
+	//		//还在等待中会返回真；如果 t已经到期或者被停止了会返回假。
+	//		t.Reset(2 * time.Second)
+	//	}
+	//}(timer1)
+	//
+	//wg.Wait()
+	//log.Print("this is a log")
+	//log.Printf("this is a log: %d", 100) // 格式化输出
+	//name := "zhangsan"
+	//age := 20
+	//log.Println(name, " ", age)
+	//defer fmt.Println("发生了 panic错误！")
+	//log.Print("this is a log")
+	//log.Panic("this is a panic log ")
+	//fmt.Println("运行结束。。。")
+	//defer fmt.Println("defer。。。")
+	//log.Print("this is a log")
+	//log.Fatal("this is a fatal log")
+	//fmt.Println("运行结束。。。")
+	//i := log.Flags()
+	//fmt.Printf("i: %v\n", i)
+	//log.SetFlags(log.Ldate | log.Ltime | log.Llongfile)
+	//log.Print("this is a log")
+	//s := log.Prefix()
+	//fmt.Printf("s: %v\n", s)
+	//log.SetPrefix("[MyLog] ")
+	//s = log.Prefix()
+	//fmt.Printf("s: %v\n", s)
+	//log.Print("this is a log...")
+	//f, err := os.OpenFile("test.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	//if err != nil {
+	//	log.Panic("打开日志文件异常")
+	//}
+	//log.SetOutput(f)
+	//log.Print("this is a file log...")
+	logger.Println("自定义logger")
 }
 
 type MyHandler struct {
