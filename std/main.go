@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"io"
 	"log"
@@ -236,18 +235,26 @@ func main() {
 	//fmt.Println(bytes.Count(s, sep1)) //1
 	//fmt.Println(bytes.Count(s, sep2)) //2
 	//fmt.Println(bytes.Count(s, sep3)) //9
-	s := []byte("hello,world")
-	old := []byte("o")
-	news := []byte("ee")
-	fmt.Println(string(bytes.Replace(s, old, news, 0)))  //hello,world
-	fmt.Println(string(bytes.Replace(s, old, news, 1)))  //hellee,world
-	fmt.Println(string(bytes.Replace(s, old, news, 2)))  //hellee,weerld
-	fmt.Println(string(bytes.Replace(s, old, news, -1))) //hellee,weerld
+	//s := []byte("hello,world")
+	//old := []byte("o")
+	//news := []byte("ee")
+	//fmt.Println(string(bytes.Replace(s, old, news, 0)))  //hello,world
+	//fmt.Println(string(bytes.Replace(s, old, news, 1)))  //hellee,world
+	//fmt.Println(string(bytes.Replace(s, old, news, 2)))  //hellee,weerld
+	//fmt.Println(string(bytes.Replace(s, old, news, -1))) //hellee,weerld
+	//
+	//s1 := []byte("你好世界")
+	//r := bytes.Runes(s1)
+	//fmt.Println("转换前字符串的长度：", len(s1)) //12
+	//fmt.Println("转换后字符串的长度：", len(r))  //4
 
-	s1 := []byte("你好世界")
-	r := bytes.Runes(s1)
-	fmt.Println("转换前字符串的长度：", len(s1)) //12
-	fmt.Println("转换后字符串的长度：", len(r))  //4
+	s1 := []int{1, 2, 3}
+	i := append(s1, 4)
+	fmt.Printf("i: %v\n", i)
+
+	s2 := []int{7, 8, 9}
+	i2 := append(s1, s2...)
+	fmt.Printf("i2: %v\n", i2)
 }
 
 type MyHandler struct {
