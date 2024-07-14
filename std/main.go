@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -77,6 +78,14 @@ func init() {
 		log.Panic("打开日志文件异常")
 	}
 	logger = log.New(logFile, "[Mylog]", log.Ldate|log.Ltime|log.Lshortfile)
+}
+
+type Person struct {
+	Name    string
+	Age     int
+	Email   string
+	Married bool
+	Parent  []string
 }
 
 func main() {
@@ -248,13 +257,45 @@ func main() {
 	//fmt.Println("转换前字符串的长度：", len(s1)) //12
 	//fmt.Println("转换后字符串的长度：", len(r))  //4
 
-	s1 := []int{1, 2, 3}
-	i := append(s1, 4)
-	fmt.Printf("i: %v\n", i)
+	//s1 := []int{1, 2, 3}
+	//i := append(s1, 4)
+	//fmt.Printf("i: %v\n", i)
+	//
+	//s2 := []int{7, 8, 9}
+	//i2 := append(s1, s2...)
+	//fmt.Printf("i2: %v\n", i2)
 
-	s2 := []int{7, 8, 9}
-	i2 := append(s1, s2...)
-	fmt.Printf("i2: %v\n", i2)
+	//p := Person{
+	//	Name:    "zhangsan",
+	//	Age:     20,
+	//	Email:   "zhangsan@mail.com",
+	//	Married: true,
+	//}
+	//b, _ := json.Marshal(p)
+	//jsonstr := string(b)
+	//fmt.Printf("b: %v\n", jsonstr)
+	//pe := &Person{}
+	//json.Unmarshal([]byte(jsonstr), pe)
+	//fmt.Printf("person: %v", pe)
+	//f, _ := os.Open("test.json")
+	//defer f.Close()
+	//
+	//d := json.NewDecoder(f)
+	//var v map[string]any
+	//d.Decode(&v)
+	//
+	//fmt.Printf("v: %v\n", v)
+	p := Person{
+		Name:   "zhangsan",
+		Age:    20,
+		Email:  "zhangsan@mail.com",
+		Parent: []string{"Daddy", "Mom"},
+	}
+	f, _ := os.OpenFile("test1.json", os.O_WRONLY|os.O_CREATE, 077)
+	defer f.Close()
+
+	d := json.NewEncoder(f)
+	d.Encode(p)
 }
 
 type MyHandler struct {
