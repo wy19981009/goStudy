@@ -1,12 +1,12 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"sort"
 )
 
 func fileStat() {
@@ -86,6 +86,21 @@ type Person struct {
 	Email   string
 	Married bool
 	Parent  []string
+}
+
+type NewInts []uint
+
+func (n NewInts) Len() int {
+	return len(n)
+}
+
+func (n NewInts) Less(i, j int) bool {
+	fmt.Println(i, j, n[i] < n[j], n)
+	return n[i] < n[j]
+}
+
+func (n NewInts) Swap(i, j int) {
+	n[i], n[j] = n[j], n[i]
 }
 
 func main() {
@@ -285,17 +300,20 @@ func main() {
 	//d.Decode(&v)
 	//
 	//fmt.Printf("v: %v\n", v)
-	p := Person{
-		Name:   "zhangsan",
-		Age:    20,
-		Email:  "zhangsan@mail.com",
-		Parent: []string{"Daddy", "Mom"},
-	}
-	f, _ := os.OpenFile("test1.json", os.O_WRONLY|os.O_CREATE, 077)
-	defer f.Close()
-
-	d := json.NewEncoder(f)
-	d.Encode(p)
+	//p := Person{
+	//	Name:   "zhangsan",
+	//	Age:    20,
+	//	Email:  "zhangsan@mail.com",
+	//	Parent: []string{"Daddy", "Mom"},
+	//}
+	//f, _ := os.OpenFile("test1.json", os.O_WRONLY|os.O_CREATE, 077)
+	//defer f.Close()
+	//
+	//d := json.NewEncoder(f)
+	//d.Encode(p)
+	n := []uint{1, 3, 2}
+	sort.Sort(NewInts(n))
+	fmt.Println(n)
 }
 
 type MyHandler struct {
