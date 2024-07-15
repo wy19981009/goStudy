@@ -1,12 +1,13 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"log"
-	"math"
 	"net/http"
 	"os"
+	"time"
 )
 
 func fileStat() {
@@ -314,16 +315,56 @@ func main() {
 	//n := []uint{1, 3, 2}
 	//sort.Sort(NewInts(n))
 	//fmt.Println(n)
-	fmt.Println(math.IsNaN(12321.321321))
-	fmt.Println(math.Ceil(1.13456))
-	fmt.Println(math.Floor(2.9999))
-	fmt.Println(math.Trunc(2.9999))
-	fmt.Println(math.Abs(2.999312323132141665374)) //2.9993123231321417
-	fmt.Println(math.Abs(2.999312323132141465374)) //2.9993123231321412
-	fmt.Println(math.Max(1000, 200))
-	fmt.Println(math.Min(1000, 200))
-	fmt.Println(math.Mod(123, 0))  //NaN
-	fmt.Println(math.Mod(123, 10)) //3
+	//fmt.Println(math.IsNaN(12321.321321))
+	//fmt.Println(math.Ceil(1.13456))
+	//fmt.Println(math.Floor(2.9999))
+	//fmt.Println(math.Trunc(2.9999))
+	//fmt.Println(math.Abs(2.999312323132141665374)) //2.9993123231321417
+	//fmt.Println(math.Abs(2.999312323132141465374)) //2.9993123231321412
+	//fmt.Println(math.Max(1000, 200))
+	//fmt.Println(math.Min(1000, 200))
+	//fmt.Println(math.Mod(123, 0))  //NaN
+	//fmt.Println(math.Mod(123, 10)) //3
+	// flag.Type() 的使用
+	//name := flag.String("name", "张三", "姓名")
+	//age := flag.Int("age", 18, "年龄")
+	//married := flag.Bool("married", false, "婚否")
+	//delay := flag.Duration("d", 0, "时间间隔")
+	//
+	//flag.Parse()
+	//
+	//fmt.Println(*name, *age, *married, *delay)
+	//var name string
+	//var age uint
+	//var married bool
+	//var d time.Duration
+	//
+	//flag.StringVar(&name, "name", "王五", "姓名")
+	//flag.UintVar(&age, "age", 18, "年龄")
+	//flag.BoolVar(&married, "m", false, "婚否")
+	//flag.DurationVar(&d, "duration", 0, "时间间隔")
+	//
+	//flag.Parse()
+	//
+	//fmt.Println(name, age, married, d)
+
+	var name string
+	var age uint
+	var married bool
+	var d time.Duration
+
+	flag.StringVar(&name, "name", "王五", "姓名")
+	flag.UintVar(&age, "age", 18, "年龄")
+	flag.BoolVar(&married, "m", false, "婚否")
+	flag.DurationVar(&d, "duration", 0, "时间间隔")
+
+	flag.Parse()
+
+	fmt.Println(name, age, married, d) // lisi 35 true 1h15m36s
+
+	fmt.Println(flag.Args())  // [abc true 123]
+	fmt.Println(flag.NArg())  // 3
+	fmt.Println(flag.NFlag()) //  4
 }
 
 type MyHandler struct {
