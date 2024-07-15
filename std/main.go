@@ -6,9 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"runtime"
 	"sync"
-	"time"
 )
 
 func fileStat() {
@@ -408,23 +406,23 @@ func main() {
 	//
 	//wg.Wait() // 主goroutine等待子goroutine结束，主在结束
 
-	startTime := time.Now()
-	//runtime.GOMAXPROCS(1)  // 设置go运行时(runtime)的os线程数
-	// runtime.GOMAXPROCS设置为1os线程数时执行时间要比4os线程数用时更长
-	runtime.GOMAXPROCS(4) // 设置go运行时(runtime)的os线程数
-	wg.Add(1)
-	go a()
-	wg.Add(1)
-	go b()
-	wg.Add(1)
-	go a()
-	wg.Add(1)
-	go b()
-
-	wg.Wait()
-	fmt.Println(time.Now().Sub(startTime))
-	fmt.Println("cpus:", runtime.NumCPU())
-	fmt.Println("archive:", runtime.GOOS)
+	//startTime := time.Now()
+	////runtime.GOMAXPROCS(1)  // 设置go运行时(runtime)的os线程数
+	//// runtime.GOMAXPROCS设置为1os线程数时执行时间要比4os线程数用时更长
+	//runtime.GOMAXPROCS(4) // 设置go运行时(runtime)的os线程数
+	//wg.Add(1)
+	//go a()
+	//wg.Add(1)
+	//go b()
+	//wg.Add(1)
+	//go a()
+	//wg.Add(1)
+	//go b()
+	//
+	//wg.Wait()
+	//fmt.Println(time.Now().Sub(startTime))
+	//fmt.Println("cpus:", runtime.NumCPU())
+	//fmt.Println("archive:", runtime.GOOS)
 }
 
 type MyHandler struct {
