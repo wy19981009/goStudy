@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math"
 	"net/http"
 	"os"
-	"sort"
 )
 
 func fileStat() {
@@ -311,9 +311,19 @@ func main() {
 	//
 	//d := json.NewEncoder(f)
 	//d.Encode(p)
-	n := []uint{1, 3, 2}
-	sort.Sort(NewInts(n))
-	fmt.Println(n)
+	//n := []uint{1, 3, 2}
+	//sort.Sort(NewInts(n))
+	//fmt.Println(n)
+	fmt.Println(math.IsNaN(12321.321321))
+	fmt.Println(math.Ceil(1.13456))
+	fmt.Println(math.Floor(2.9999))
+	fmt.Println(math.Trunc(2.9999))
+	fmt.Println(math.Abs(2.999312323132141665374)) //2.9993123231321417
+	fmt.Println(math.Abs(2.999312323132141465374)) //2.9993123231321412
+	fmt.Println(math.Max(1000, 200))
+	fmt.Println(math.Min(1000, 200))
+	fmt.Println(math.Mod(123, 0))  //NaN
+	fmt.Println(math.Mod(123, 10)) //3
 }
 
 type MyHandler struct {
