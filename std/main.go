@@ -1,12 +1,13 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"runtime"
+	"sync"
 	"time"
 )
 
@@ -102,6 +103,21 @@ func (n NewInts) Less(i, j int) bool {
 
 func (n NewInts) Swap(i, j int) {
 	n[i], n[j] = n[j], n[i]
+}
+
+var wg sync.WaitGroup
+
+func a() {
+	defer wg.Done()
+	for i := 0; i < 100000000; i++ {
+		//fmt.Println("A", i)
+	}
+}
+func b() {
+	defer wg.Done()
+	for i := 0; i < 100000000; i++ {
+		//fmt.Println("B", i)
+	}
 }
 
 func main() {
@@ -348,23 +364,67 @@ func main() {
 	//
 	//fmt.Println(name, age, married, d)
 
-	var name string
-	var age uint
-	var married bool
-	var d time.Duration
+	//var name string
+	//var age uint
+	//var married bool
+	//var d time.Duration
+	//
+	//flag.StringVar(&name, "name", "王五", "姓名")
+	//flag.UintVar(&age, "age", 18, "年龄")
+	//flag.BoolVar(&married, "m", false, "婚否")
+	//flag.DurationVar(&d, "duration", 0, "时间间隔")
+	//
+	//flag.Parse()
+	//
+	//fmt.Println(name, age, married, d) // lisi 35 true 1h15m36s
+	//
+	//fmt.Println(flag.Args())  // [abc true 123]
+	//fmt.Println(flag.NArg())  // 3
+	//fmt.Println(flag.NFlag()) //  4
 
-	flag.StringVar(&name, "name", "王五", "姓名")
-	flag.UintVar(&age, "age", 18, "年龄")
-	flag.BoolVar(&married, "m", false, "婚否")
-	flag.DurationVar(&d, "duration", 0, "时间间隔")
+	//go func() {
+	//	m := make(map[int]int)
+	//	for i := 0; ; i++ {
+	//		m[i] = i
+	//	}
+	//}()
+	//
+	//sig := make(chan os.Signal, 1)
+	//signal.Notify(sig)
+	//<-
+	//wg.Add(1)
+	//go func() {
+	//	defer wg.Done()
+	//	defer fmt.Println("A.defer")
+	//	func() {
+	//		defer fmt.Println("B.defer")
+	//		// 结束协程
+	//		runtime.Goexit()
+	//		defer fmt.Println("C.defer")
+	//		fmt.Println("B")
+	//	}()
+	//	fmt.Println("A")
+	//}()
+	//
+	//wg.Wait() // 主goroutine等待子goroutine结束，主在结束
 
-	flag.Parse()
+	startTime := time.Now()
+	//runtime.GOMAXPROCS(1)  // 设置go运行时(runtime)的os线程数
+	// runtime.GOMAXPROCS设置为1os线程数时执行时间要比4os线程数用时更长
+	runtime.GOMAXPROCS(4) // 设置go运行时(runtime)的os线程数
+	wg.Add(1)
+	go a()
+	wg.Add(1)
+	go b()
+	wg.Add(1)
+	go a()
+	wg.Add(1)
+	go b()
 
-	fmt.Println(name, age, married, d) // lisi 35 true 1h15m36s
-
-	fmt.Println(flag.Args())  // [abc true 123]
-	fmt.Println(flag.NArg())  // 3
-	fmt.Println(flag.NFlag()) //  4
+	wg.Wait()
+	fmt.Println(time.Now().Sub(startTime))
+	fmt.Println("cpus:", runtime.NumCPU())
+	fmt.Println("archive:", runtime.GOOS)
 }
 
 type MyHandler struct {
